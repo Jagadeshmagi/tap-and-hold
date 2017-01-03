@@ -1,103 +1,63 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Ga from '../functions/Ga';
 import style from '../css/main.css';
 
-import Tapandhold from './tap-and-hold'
-import Carousel from './carousel';
+import {TweenLite, TimelineMax} from 'gsap';
+
 
 
 export default class Page extends React.Component {
-	getDotDecorators() {
-		const DefaultDecorators = [
-		  {
-		    component: React.createClass({
-		      render() {
-		        var self = this;
-		        var indexes = this.getIndexes(self.props.slideCount, self.props.slidesToScroll);
-		        return (
-		          <ul style={self.getListStyles()}>
-		            {
-		              indexes.map(function(index) {
-		                return (
-		                  <li style={self.getListItemStyles()} key={index}>
-		                    <button
-		                      style={self.getButtonStyles(self.props.currentSlide === index)}
-		                      onClick={self.props.goToSlide.bind(null, index)}>
-		                      &bull;
-		                    </button>
-		                  </li>
-		                )
-		              })
-		            }
-		          </ul>
-		        )
-		      },
-		      getIndexes(count, inc) {
-		        var arr = [];
-		        for (var i = 0; i < count; i += inc) {
-		          arr.push(i);
-		        }
-		        return arr;
-		      },
-		      getListStyles() {
-		        return {
-		          position: 'relative',
-		          margin: 0,
-		          top: 20,
-		          padding: 0
-		        }
-		      },
-		      getListItemStyles() {
-		        return {
-		          listStyleType: 'none',
-		          display: 'inline-block'
-		        }
-		      },
-		      getButtonStyles(active) {
-		        return {
-		          border: 0,
-		          background: 'transparent',
-		          color: 'black',
-		          cursor: 'pointer',
-		          padding: '10px 4px',
-		          outline: 0,
-		          fontSize: 24,
-		          lineHeight: '5px',
-		          opacity: active ? 1 : 0.5
-		        }
-		      }
-		    }),
-		    position: 'BottomCenter'
-		  }
-		];
 
-		return DefaultDecorators;
+
+
+	componentDidMount(){
+		console.log('Working');
+		this.topLeftTL = new TimelineMax({repeat:-1});
+		this.topLeftTL.to(this.refs.div1, 2.5, {x: '100px', ease:Linear.easeNone})
+					  .to(this.refs.div1, 2.5, {x: '0', ease:Linear.easeNone});
+		//this.topPngImage = new TimelineMax({repeat:-1});
+		//this.topPngImage.to(this.refs.topImage , 1, {delay:2,autoAlpha: 1, display:'block'});
+					  // .to(this.refs.topImage , 1, {delay:5,autoAlpha: 1, display:'none'});
 	}
-	
+		
+
+	onImage(){
+		console.log('onload');
+		<img style={css.pngImage}src="https://cdn0.iconfinder.com/data/icons/sport-and-fitness/500/Fitness_gym_gymnastic_health_dumbbell_exercise_strength_weight_sport_stamina_man_1-512.png" alt='gim image' />
+
+	}
+
+
 	render(){
+		const css={
+			bgStyle:{
+				backgroundColor:'blue',
+				width:50,
+				height: 50,
+			},
+			bgImgStyle:{
+				width:'150%',
+				// display:'block',
+				// position:'absolute',
+				marginLeft:'-30%',
+				top:0
+			},
+			pngImage:{
+				position:'absolute',
+				top:0,
+				width:'50%',
+				display:'none'			
+			}
+		}
 
 		return(
 			<div>
-				<Carousel decorators={this.getDotDecorators()} autoplay={true}>
-					<Tapandhold
-					actualImage="http://assets.myntassets.com/assets/images/lookbook/test/2016/11/15/11479203961116-front.jpg"
-					insideImage="http://assets.myntassets.com/assets/images/lookbook/test/2016/11/15/11479203961133-back.jpg"
-					shopLink="http://myntra.com"
-					/>
-					<Tapandhold
-					actualImage="http://assets.myntassets.com/assets/images/lookbook/test/2016/11/15/11479203961116-front.jpg"
-					insideImage="http://assets.myntassets.com/assets/images/lookbook/test/2016/11/15/11479203961133-back.jpg"
-					shopLink="http://myntra.com"
-					/>	
-					<Tapandhold
-					actualImage="http://assets.myntassets.com/assets/images/lookbook/test/2016/11/15/11479203961116-front.jpg"
-					insideImage="http://assets.myntassets.com/assets/images/lookbook/test/2016/11/15/11479203961133-back.jpg"
-					shopLink="http://myntra.com"
-					/>
-				</Carousel>
-
-						
+				{/*<div ref="div1" style={css.bgStyle}> </div>*/}
+				<div style={{position:'relative'}}>
+					<img ref="div1" style={css.bgImgStyle}src="http://assets.myntassets.com/assets/images/lookbook/2016/12/23/11482487556887-USpolo.gif" alt="background" />
+					
+					{/*<img ref="topImage" style={css.pngImage}src="https://cdn0.iconfinder.com/data/icons/sport-and-fitness/500/Fitness_gym_gymnastic_health_dumbbell_exercise_strength_weight_sport_stamina_man_1-512.png" alt='gim image' />*/}
+				</div>
 			</div>
 		);
 	}
